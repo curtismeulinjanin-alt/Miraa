@@ -1,0 +1,1304 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Miraa Shop ⚡</title>
+    <style>
+        /* ===== RESET & BASE ===== */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;900&family=Orbitron:wght@400;700;900&display=swap');
+        
+        :root {
+            --bg: #0a0a1a;
+            --primary: #00f0ff;
+            --secondary: #7b2ff7;
+            --accent: #ff00aa;
+            --gold: #ffd700;
+            --card-bg: rgba(255,255,255,0.04);
+            --card-border: rgba(0,240,255,0.15);
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--bg);
+            color: #fff;
+            overflow-x: hidden;
+            background-image:
+                radial-gradient(ellipse at 10% 20%, rgba(123,47,247,0.12) 0%, transparent 50%),
+                radial-gradient(ellipse at 90% 80%, rgba(0,240,255,0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(255,0,170,0.05) 0%, transparent 50%);
+        }
+
+        /* ===== FLOATING PARTICLES BG ===== */
+        .particles {
+            position: fixed; top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none; z-index: 0; overflow: hidden;
+        }
+        .particle {
+            position: absolute;
+            width: 4px; height: 4px;
+            background: var(--primary);
+            border-radius: 50%;
+            box-shadow: 0 0 8px var(--primary), 0 0 20px var(--primary);
+            animation: floatParticle linear infinite;
+            opacity: 0;
+        }
+        .particle:nth-child(1) { left: 5%; animation-duration: 14s; animation-delay: 0s; width: 3px; height: 3px; }
+        .particle:nth-child(2) { left: 15%; animation-duration: 18s; animation-delay: 1s; background: var(--secondary); box-shadow: 0 0 8px var(--secondary), 0 0 20px var(--secondary); }
+        .particle:nth-child(3) { left: 25%; animation-duration: 12s; animation-delay: 2s; width: 5px; height: 5px; }
+        .particle:nth-child(4) { left: 35%; animation-duration: 20s; animation-delay: 0.5s; background: var(--accent); box-shadow: 0 0 8px var(--accent), 0 0 20px var(--accent); }
+        .particle:nth-child(5) { left: 45%; animation-duration: 16s; animation-delay: 3s; }
+        .particle:nth-child(6) { left: 55%; animation-duration: 22s; animation-delay: 1.5s; width: 6px; height: 6px; background: var(--gold); box-shadow: 0 0 8px var(--gold), 0 0 20px var(--gold); }
+        .particle:nth-child(7) { left: 65%; animation-duration: 13s; animation-delay: 2.5s; }
+        .particle:nth-child(8) { left: 75%; animation-duration: 19s; animation-delay: 0.8s; background: var(--secondary); box-shadow: 0 0 8px var(--secondary), 0 0 20px var(--secondary); }
+        .particle:nth-child(9) { left: 85%; animation-duration: 15s; animation-delay: 3.5s; width: 3px; height: 3px; }
+        .particle:nth-child(10) { left: 92%; animation-duration: 17s; animation-delay: 1.2s; background: var(--accent); box-shadow: 0 0 8px var(--accent), 0 0 20px var(--accent); }
+        .particle:nth-child(11) { left: 8%; animation-duration: 21s; animation-delay: 4s; width: 7px; height: 7px; }
+        .particle:nth-child(12) { left: 50%; animation-duration: 11s; animation-delay: 0.3s; background: var(--gold); box-shadow: 0 0 8px var(--gold), 0 0 20px var(--gold); }
+        .particle:nth-child(13) { left: 70%; animation-duration: 23s; animation-delay: 2.8s; }
+        .particle:nth-child(14) { left: 30%; animation-duration: 10s; animation-delay: 1.8s; background: var(--primary); box-shadow: 0 0 8px var(--primary), 0 0 20px var(--primary); width: 5px; height: 5px; }
+        .particle:nth-child(15) { left: 95%; animation-duration: 24s; animation-delay: 0.1s; }
+
+        @keyframes floatParticle {
+            0%   { transform: translateY(100vh) scale(0); opacity: 0; }
+            10%  { opacity: 0.8; }
+            90%  { opacity: 0.8; }
+            100% { transform: translateY(-10vh) scale(1.5); opacity: 0; }
+        }
+
+        /* ===== SCROLLBAR ===== */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0a0a1a; }
+        ::-webkit-scrollbar-thumb { background: linear-gradient(180deg, var(--primary), var(--secondary)); border-radius: 10px; }
+
+        /* ===== CONTAINER ===== */
+        .container { max-width: 1300px; margin: 0 auto; padding: 20px; position: relative; z-index: 1; }
+
+        /* ===== ANIMATIONS GLOBALES ===== */
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(60px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeInLeft { from { opacity: 0; transform: translateX(-80px); } to { opacity: 1; transform: translateX(0); } }
+        @keyframes fadeInRight { from { opacity: 0; transform: translateX(80px); } to { opacity: 1; transform: translateX(0); } }
+        @keyframes pulseGlow { 0%, 100% { box-shadow: 0 0 20px rgba(0,240,255,0.3); } 50% { box-shadow: 0 0 40px rgba(0,240,255,0.7), 0 0 80px rgba(0,240,255,0.2); } }
+        @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-12px); } }
+        @keyframes floatSlow { 0%, 100% { transform: translateY(0px) rotate(0deg); } 50% { transform: translateY(-8px) rotate(1deg); } }
+        @keyframes spinSlow { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        @keyframes shimmer { 0% { background-position: -200% center; } 100% { background-position: 200% center; } }
+        @keyframes glitchText { 0% { text-shadow: 2px 0 #ff00aa, -2px 0 #00f0ff; } 20% { text-shadow: -2px 0 #ff00aa, 2px 0 #00f0ff; } 40% { text-shadow: 2px 2px #ff00aa, -2px -2px #00f0ff; } 60% { text-shadow: -2px 2px #ff00aa, 2px -2px #00f0ff; } 80% { text-shadow: 2px -2px #ff00aa, -2px 2px #00f0ff; } 100% { text-shadow: 2px 0 #ff00aa, -2px 0 #00f0ff; } }
+        @keyframes neonPulse { 0%, 100% { text-shadow: 0 0 7px var(--primary), 0 0 10px var(--primary), 0 0 21px var(--primary), 0 0 42px var(--primary); } 50% { text-shadow: 0 0 10px var(--primary), 0 0 20px var(--primary), 0 0 40px var(--primary), 0 0 80px var(--primary), 0 0 120px var(--primary); } }
+        @keyframes borderGlow { 0%, 100% { border-color: var(--primary); box-shadow: 0 0 15px rgba(0,240,255,0.2); } 50% { border-color: var(--secondary); box-shadow: 0 0 25px rgba(123,47,247,0.4); } }
+        @keyframes rainbow { 0% { color: #ff0000; } 16% { color: #ff8800; } 33% { color: #ffff00; } 50% { color: #00ff00; } 66% { color: #0088ff; } 83% { color: #8800ff; } 100% { color: #ff0000; } }
+        @keyframes scalePulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.08); } }
+        @keyframes typing { from { width: 0; } to { width: 100%; } }
+        @keyframes blink { 0%, 100% { border-right-color: transparent; } 50% { border-right-color: var(--primary); } }
+        @keyframes flash { 0%, 100% { opacity: 1; } 50% { opacity: 0.15; } }
+        @keyframes wobble { 0%, 100% { transform: rotate(0deg); } 25% { transform: rotate(-3deg); } 75% { transform: rotate(3deg); } }
+        @keyframes gradientMove { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+        @keyframes slideDown { 0% { transform: translateY(-20px); opacity: 0; } 100% { transform: translateY(0); opacity: 1; } }
+        @keyframes glowPulse { 0%, 100% { filter: drop-shadow(0 0 5px var(--gold)); } 50% { filter: drop-shadow(0 0 20px var(--gold)) drop-shadow(0 0 40px rgba(255,215,0,0.3)); } }
+        @keyframes priceGlow { 0%, 100% { filter: drop-shadow(0 0 3px rgba(255,215,0,0.4)); } 50% { filter: drop-shadow(0 0 10px rgba(255,215,0,0.6)); } }
+
+        .animate-on-scroll { opacity: 0; transform: translateY(50px); transition: all 0.8s cubic-bezier(0.2, 0.9, 0.3, 1.1); }
+        .animate-on-scroll.visible { opacity: 1; transform: translateY(0); }
+
+        /* ===== HEADER ===== */
+        header { text-align: center; padding: 50px 20px 30px; position: relative; }
+        .logo {
+            font-family: 'Orbitron', monospace;
+            font-size: 4.5rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--primary), var(--secondary), var(--accent), var(--primary));
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradientMove 3s ease infinite, float 4s ease-in-out infinite, glitchText 0.3s infinite;
+            display: inline-block;
+            letter-spacing: 6px;
+            filter: drop-shadow(0 0 30px rgba(0,240,255,0.5));
+        }
+        .logo-sub {
+            font-size: 1.2rem;
+            color: rgba(255,255,255,0.6);
+            letter-spacing: 12px;
+            text-transform: uppercase;
+            animation: fadeInUp 1s ease 0.5s both, pulseGlow 3s ease-in-out infinite;
+            display: inline-block;
+            padding: 8px 30px;
+            border: 1px solid rgba(0,240,255,0.2);
+            border-radius: 50px;
+            backdrop-filter: blur(10px);
+            margin-top: 10px;
+        }
+        .lightning-divider { font-size: 2rem; animation: flash 1.5s ease-in-out infinite, neonPulse 2s ease-in-out infinite; margin: 15px 0; letter-spacing: 15px; }
+
+        /* ===== SECTION TITLES ===== */
+        .section-title {
+            font-family: 'Orbitron', monospace;
+            font-size: 2.5rem;
+            font-weight: 700;
+            text-align: center;
+            margin: 60px 0 35px;
+            position: relative;
+            animation: neonPulse 3s ease-in-out infinite;
+            text-transform: uppercase;
+        }
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 120px;
+            height: 4px;
+            margin: 12px auto 0;
+            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
+            border-radius: 4px;
+            animation: pulseGlow 2s ease-in-out infinite;
+        }
+
+        /* ===== CARDS ===== */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+            padding: 25px 20px;
+            backdrop-filter: blur(15px);
+            transition: all 0.4s cubic-bezier(0.2, 0.9, 0.3, 1.1);
+            position: relative;
+            overflow: hidden;
+            animation: borderGlow 4s ease-in-out infinite, floatSlow 6s ease-in-out infinite;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        .card:nth-child(even) { animation-delay: 1s, 0.5s; }
+        .card::before {
+            content: '';
+            position: absolute;
+            top: -50%; left: -50%;
+            width: 200%; height: 200%;
+            background: conic-gradient(from 0deg, transparent, rgba(0,240,255,0.05), transparent, rgba(123,47,247,0.05), transparent);
+            animation: spinSlow 8s linear infinite;
+            pointer-events: none;
+        }
+        .card:hover {
+            transform: translateY(-12px) scale(1.03);
+            border-color: var(--primary);
+            box-shadow: 0 20px 60px rgba(0,240,255,0.2), 0 0 40px rgba(123,47,247,0.15);
+            animation-play-state: paused;
+        }
+        .card > * { position: relative; z-index: 1; }
+        .card h3 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .card .price {
+            font-size: 2rem;
+            font-weight: 900;
+            color: var(--gold);
+            display: block;
+            margin: 10px 0;
+            animation: priceGlow 2s ease-in-out infinite;
+        }
+        .card .old-price { text-decoration: line-through; color: rgba(255,255,255,0.3); font-size: 0.9rem; }
+        .card .arrow-ani { display: inline-block; animation: wobble 1.5s ease-in-out infinite; color: var(--primary); font-weight: 900; }
+        .card .stock-info {
+            font-size: 0.75rem;
+            color: rgba(255,255,255,0.4);
+            margin: 5px 0 10px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            animation: fadeInUp 0.5s ease both;
+        }
+        .card .stock-info .dot {
+            width: 8px; height: 8px;
+            border-radius: 50%;
+            display: inline-block;
+            animation: scalePulse 1.5s ease-in-out infinite;
+        }
+        .card .stock-info .dot.green { background: #00ff88; box-shadow: 0 0 10px #00ff88; }
+        .card .stock-info .dot.orange { background: #ff8800; box-shadow: 0 0 10px #ff8800; }
+        .card .stock-info .dot.red { background: #ff4444; box-shadow: 0 0 10px #ff4444; }
+        .card .card-badge {
+            display: inline-block;
+            padding: 3px 12px;
+            border-radius: 20px;
+            font-size: 0.65rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+            background: rgba(0,240,255,0.1);
+            border: 1px solid rgba(0,240,255,0.2);
+            color: var(--primary);
+        }
+        .card .card-badge.hot { background: rgba(255,0,170,0.15); border-color: rgba(255,0,170,0.3); color: var(--accent); }
+        .card .card-badge.best { background: rgba(255,215,0,0.15); border-color: rgba(255,215,0,0.3); color: var(--gold); }
+
+        /* ===== BUY BUTTON ===== */
+        .buy-btn {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: #fff;
+            padding: 14px 35px;
+            border-radius: 50px;
+            font-weight: 700;
+            text-decoration: none;
+            font-size: 1rem;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            animation: pulseGlow 2s ease-in-out infinite;
+            border: none;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            text-transform: uppercase;
+            margin-top: 12px;
+        }
+        .buy-btn::after {
+            content: '';
+            position: absolute;
+            top: -50%; left: -50%;
+            width: 200%; height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+            animation: shimmer 3s linear infinite;
+            background-size: 200% 100%;
+        }
+        .buy-btn:hover {
+            transform: scale(1.08);
+            box-shadow: 0 0 50px rgba(0,240,255,0.5);
+        }
+        .buy-btn.small { padding: 10px 22px; font-size: 0.85rem; }
+        .buy-btn.gold { background: linear-gradient(135deg, var(--gold), #ff8800); }
+        .buy-btn.gold:hover { box-shadow: 0 0 50px rgba(255,215,0,0.5); }
+        .buy-btn.purple { background: linear-gradient(135deg, var(--secondary), var(--accent)); }
+
+        /* ===== CATEGORIES SECTIONS ===== */
+        .category-badge {
+            display: inline-block;
+            padding: 8px 25px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(0,240,255,0.3);
+            animation: pulseGlow 2s ease-in-out infinite;
+        }
+
+        /* ===== NITRO SECTION ===== */
+        .nitro-highlight {
+            background: linear-gradient(135deg, rgba(0,240,255,0.08), rgba(123,47,247,0.08));
+            border: 2px solid rgba(0,240,255,0.2);
+            border-radius: 30px;
+            padding: 30px;
+            animation: borderGlow 3s ease-in-out infinite;
+        }
+        .nitro-highlight .price-big {
+            font-size: 3.5rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: neonPulse 2s ease-in-out infinite;
+        }
+
+        /* ===== BADGES ===== */
+        .badges-row {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin: 30px 0;
+        }
+        .badge-item {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 15px;
+            padding: 15px 25px;
+            font-weight: 600;
+            animation: float 5s ease-in-out infinite, borderGlow 3s ease-in-out infinite;
+            backdrop-filter: blur(10px);
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .badge-item:nth-child(2) { animation-delay: 0.5s; }
+        .badge-item:nth-child(3) { animation-delay: 1s; }
+        .badge-item:nth-child(4) { animation-delay: 1.5s; }
+        .badge-item:nth-child(5) { animation-delay: 2s; }
+
+        /* ===== FOOTER ===== */
+        footer { text-align: center; padding: 50px 20px; margin-top: 60px; border-top: 1px solid rgba(0,240,255,0.1); }
+        footer .big-text {
+            font-family: 'Orbitron', monospace;
+            font-size: 3rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--gold), var(--accent), var(--primary));
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradientMove 2s ease infinite, float 3s ease-in-out infinite;
+        }
+        footer .sub-text { color: rgba(255,255,255,0.5); letter-spacing: 6px; font-size: 0.9rem; text-transform: uppercase; animation: fadeInUp 1s ease 0.3s both; }
+        footer .stars { font-size: 1.5rem; animation: rainbow 2s linear infinite; letter-spacing: 5px; }
+
+        /* ===== PAYMENT SECTION ===== */
+        .payment-methods { display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; margin: 25px 0; }
+        .payment-item {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 15px;
+            padding: 20px 30px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            animation: float 6s ease-in-out infinite, borderGlow 4s ease-in-out infinite;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .payment-item:hover { transform: scale(1.1); border-color: var(--gold); box-shadow: 0 0 40px rgba(255,215,0,0.3); }
+        .payment-item.paypal { border-color: #0070ba; animation-delay: 0.2s; }
+        .payment-item.paypal:hover { box-shadow: 0 0 40px rgba(0,112,186,0.4); }
+        .payment-item.litecoin { border-color: #b8b8b8; animation-delay: 0.4s; }
+        .payment-item.bitcoin { border-color: #f7931a; animation-delay: 0.6s; }
+
+        /* ===== CHATGPT SECTION ===== */
+        .chatgpt-duo { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin: 30px 0; }
+        @media (max-width: 768px) { .chatgpt-duo { grid-template-columns: 1fr; } .logo { font-size: 2.5rem; } .section-title { font-size: 1.8rem; } }
+        .chatgpt-card {
+            background: linear-gradient(145deg, rgba(0,0,0,0.6), rgba(10,10,30,0.8));
+            border: 2px solid rgba(0,240,255,0.15);
+            border-radius: 25px;
+            padding: 30px;
+            position: relative;
+            overflow: hidden;
+            animation: borderGlow 3s ease-in-out infinite;
+            transition: all 0.4s ease;
+            text-align: center;
+        }
+        .chatgpt-card:hover { transform: translateY(-10px); box-shadow: 0 30px 80px rgba(0,240,255,0.15); }
+        .chatgpt-card h4 { font-family: 'Orbitron', monospace; font-size: 1.8rem; margin-bottom: 15px; animation: glitchText 0.3s infinite; }
+        .chatgpt-card .price-tag {
+            font-size: 2.8rem;
+            font-weight: 900;
+            color: var(--gold);
+            animation: priceGlow 2s ease-in-out infinite, scalePulse 2s ease-in-out infinite;
+        }
+        .chatgpt-card ul { list-style: none; margin: 15px 0; }
+        .chatgpt-card ul li { padding: 6px 0; animation: fadeInLeft 0.5s ease both; font-size: 0.95rem; }
+        .chatgpt-card ul li:nth-child(2) { animation-delay: 0.1s; }
+        .chatgpt-card ul li:nth-child(3) { animation-delay: 0.2s; }
+        .chatgpt-card ul li:nth-child(4) { animation-delay: 0.3s; }
+        .chatgpt-card ul li:nth-child(5) { animation-delay: 0.4s; }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 480px) {
+            .container { padding: 10px; }
+            .cards-grid { grid-template-columns: 1fr; }
+            .payment-item { padding: 15px 20px; font-size: 0.9rem; }
+        }
+
+        /* ===== SPECIAL ON TOP BANNER ===== */
+        .ontop-banner {
+            background: linear-gradient(135deg, rgba(0,240,255,0.08), rgba(123,47,247,0.08));
+            border: 2px solid rgba(0,240,255,0.2);
+            border-radius: 20px;
+            padding: 35px 20px;
+            text-align: center;
+            margin: 40px 0;
+            animation: borderGlow 2s ease-in-out infinite;
+            position: relative;
+            overflow: hidden;
+        }
+        .ontop-banner::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(45deg, transparent, rgba(0,240,255,0.03), transparent);
+            animation: shimmer 4s linear infinite;
+            background-size: 200% 100%;
+        }
+        .ontop-banner h2 {
+            font-family: 'Orbitron', monospace;
+            font-size: 3rem;
+            font-weight: 900;
+            animation: rainbow 2s linear infinite, float 3s ease-in-out infinite;
+            position: relative;
+            z-index: 1;
+        }
+        .ontop-banner p { font-size: 1.2rem; letter-spacing: 4px; color: rgba(255,255,255,0.7); animation: fadeInUp 1s ease 0.3s both; position: relative; z-index: 1; }
+
+        /* ===== GUARANTEE ICONS ROW ===== */
+        .guarantee-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin: 30px 0; }
+        .guarantee-item {
+            text-align: center;
+            padding: 25px 15px;
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 15px;
+            animation: float 7s ease-in-out infinite, borderGlow 3s ease-in-out infinite;
+            transition: all 0.3s ease;
+        }
+        .guarantee-item:nth-child(2) { animation-delay: 0.3s; }
+        .guarantee-item:nth-child(3) { animation-delay: 0.6s; }
+        .guarantee-item:nth-child(4) { animation-delay: 0.9s; }
+        .guarantee-item:hover { transform: translateY(-8px); border-color: var(--gold); }
+        .guarantee-item .icon { font-size: 2.5rem; margin-bottom: 10px; display: block; animation: scalePulse 3s ease-in-out infinite; }
+        .guarantee-item strong { display: block; font-size: 1.1rem; margin-bottom: 5px; color: var(--primary); }
+        .guarantee-item span { font-size: 0.85rem; color: rgba(255,255,255,0.6); }
+
+        /* ===== PROVIDERS SECTION ===== */
+        .provider-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px; }
+        .provider-item {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            animation: float 5s ease-in-out infinite;
+            transition: all 0.3s ease;
+        }
+        .provider-item:hover { transform: scale(1.05); border-color: var(--accent); }
+
+        /* glitch overlay effect */
+        .glitch-overlay {
+            position: fixed; top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none; z-index: 9999;
+            background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,240,255,0.008) 2px, rgba(0,240,255,0.008) 4px);
+            animation: flash 5s ease-in-out infinite;
+        }
+
+        /* typing effect for subtitle */
+        .typing-text {
+            display: inline-block;
+            overflow: hidden;
+            white-space: nowrap;
+            border-right: 3px solid var(--primary);
+            animation: typing 3s steps(30) 1s both, blink 0.8s step-end infinite;
+            max-width: fit-content;
+            margin: 0 auto;
+            font-size: 1.1rem;
+            color: rgba(255,255,255,0.7);
+            letter-spacing: 4px;
+        }
+        @media (max-width: 600px) { .typing-text { white-space: normal; border-right: none; animation: none; } }
+
+        /* countdown badge */
+        .flash-sale { background: linear-gradient(135deg, #ff0044, #ff00aa); padding: 6px 18px; border-radius: 50px; font-weight: 700; font-size: 0.75rem; display: inline-block; animation: scalePulse 1s ease-in-out infinite, neonPulse 1s infinite; margin-bottom: 8px; }
+
+        /* ===== MODAL PAYMENT ===== */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.85);
+            backdrop-filter: blur(10px);
+            z-index: 10000;
+            justify-content: center;
+            align-items: center;
+            animation: fadeInUp 0.3s ease;
+        }
+        .modal-overlay.active { display: flex; }
+        .modal {
+            background: linear-gradient(145deg, #0d0d2b, #1a1a3e);
+            border: 2px solid var(--primary);
+            border-radius: 25px;
+            padding: 35px;
+            max-width: 500px;
+            width: 90%;
+            position: relative;
+            animation: fadeInUp 0.4s ease, borderGlow 2s ease-in-out infinite;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        .modal h2 {
+            font-family: 'Orbitron', monospace;
+            font-size: 1.8rem;
+            text-align: center;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, var(--primary), var(--gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .modal .product-info {
+            background: rgba(0,240,255,0.05);
+            border: 1px solid rgba(0,240,255,0.15);
+            border-radius: 15px;
+            padding: 15px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .modal .product-info .product-name { font-size: 1.2rem; font-weight: 700; color: var(--primary); }
+        .modal .product-info .product-price { font-size: 2rem; font-weight: 900; color: var(--gold); }
+        .modal .form-group { margin-bottom: 15px; }
+        .modal .form-group label { display: block; font-size: 0.85rem; color: rgba(255,255,255,0.7); margin-bottom: 5px; font-weight: 600; }
+        .modal .form-group input, .modal .form-group select {
+            width: 100%;
+            padding: 12px 15px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(0,240,255,0.2);
+            border-radius: 10px;
+            color: #fff;
+            font-size: 1rem;
+            outline: none;
+            transition: all 0.3s ease;
+            font-family: 'Poppins', sans-serif;
+        }
+        .modal .form-group input:focus, .modal .form-group select:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 20px rgba(0,240,255,0.2);
+        }
+        .modal .form-group input::placeholder { color: rgba(255,255,255,0.3); }
+        .modal .form-group select option { background: #1a1a3e; color: #fff; }
+        .modal .paypal-btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #0070ba, #003087);
+            border: none;
+            border-radius: 12px;
+            color: #fff;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+            font-family: 'Poppins', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .modal .paypal-btn:hover { transform: scale(1.02); box-shadow: 0 0 40px rgba(0,112,186,0.4); }
+        .modal .close-modal {
+            position: absolute;
+            top: 15px; right: 20px;
+            font-size: 2rem;
+            color: rgba(255,255,255,0.5);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: none;
+            border: none;
+            font-family: 'Poppins', sans-serif;
+        }
+        .modal .close-modal:hover { color: var(--accent); transform: rotate(90deg); }
+        .modal .payment-badge {
+            text-align: center;
+            padding: 8px;
+            background: rgba(0,240,255,0.05);
+            border-radius: 10px;
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.5);
+            margin: 10px 0;
+        }
+        .modal .btn-lien-paypal {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            background: rgba(0,240,255,0.1);
+            border: 1px dashed var(--primary);
+            border-radius: 10px;
+            color: var(--primary);
+            text-align: center;
+            text-decoration: none;
+            font-size: 0.95rem;
+            margin: 10px 0;
+            transition: all 0.3s ease;
+            word-break: break-all;
+        }
+        .modal .btn-lien-paypal:hover { background: rgba(0,240,255,0.2); }
+        .modal .success-msg {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+        .modal .success-msg .checkmark {
+            font-size: 4rem;
+            display: block;
+            margin-bottom: 10px;
+            animation: scalePulse 1s ease-in-out infinite;
+        }
+        .modal .success-msg h3 { color: #00ff88; font-size: 1.5rem; margin-bottom: 10px; }
+        .modal .warning-text {
+            font-size: 0.75rem;
+            color: rgba(255,255,255,0.4);
+            text-align: center;
+            margin-top: 10px;
+        }
+        .modal .btn-confirmer-paiement {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #00cc66, #00994d);
+            border: none;
+            border-radius: 12px;
+            color: #fff;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+            font-family: 'Poppins', sans-serif;
+        }
+        .modal .btn-confirmer-paiement:hover { transform: scale(1.02); box-shadow: 0 0 40px rgba(0,204,102,0.4); }
+        .modal .btn-secondary {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 10px;
+            color: #fff;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 8px;
+            font-family: 'Poppins', sans-serif;
+        }
+        .modal .btn-secondary:hover { background: rgba(255,255,255,0.1); }
+    </style>
+</head>
+<body>
+
+<!-- GLITCH OVERLAY -->
+<div class="glitch-overlay"></div>
+
+<!-- PARTICLES BG -->
+<div class="particles">
+    <div class="particle"></div><div class="particle"></div><div class="particle"></div>
+    <div class="particle"></div><div class="particle"></div><div class="particle"></div>
+    <div class="particle"></div><div class="particle"></div><div class="particle"></div>
+    <div class="particle"></div><div class="particle"></div><div class="particle"></div>
+    <div class="particle"></div><div class="particle"></div><div class="particle"></div>
+    <div class="particle"></div>
+</div>
+
+<!-- ===== MODAL DE PAIEMENT ===== -->
+<div class="modal-overlay" id="paymentModal">
+    <div class="modal" id="modalContent">
+        <button class="close-modal" id="closeModalBtn">&times;</button>
+        
+        <!-- Étape 1 : Infos client -->
+        <div id="step1">
+            <h2>🛒 Finaliser la commande</h2>
+            <div class="product-info">
+                <div class="product-name" id="modalProductName">Produit</div>
+                <div class="product-price" id="modalProductPrice">0.00€</div>
+            </div>
+            
+            <div class="form-group">
+                <label>📧 Email (pour recevoir le produit) *</label>
+                <input type="email" id="buyerEmail" placeholder="ex: votremail@exemple.com" required>
+            </div>
+            <div class="form-group">
+                <label>💬 Discord / Contact (optionnel)</label>
+                <input type="text" id="buyerDiscord" placeholder="ex: utilisateur#0000 ou @username">
+            </div>
+            <div class="form-group">
+                <label>📦 Méthode de livraison souhaitée *</label>
+                <select id="deliveryMethod">
+                    <option value="email">Par email</option>
+                    <option value="discord">Par Discord</option>
+                    <option value="telegram">Par Telegram</option>
+                    <option value="whatsapp">Par WhatsApp</option>
+                </select>
+            </div>
+            
+            <div class="payment-badge">🔒 Paiement sécurisé via PayPal</div>
+            
+            <button class="paypal-btn" id="goToPaypalBtn">💳 Payer avec PayPal</button>
+            <p style="text-align:center;font-size:0.8rem;color:rgba(255,255,255,0.4);margin-top:8px;">Vous serez redirigé vers PayPal pour effectuer le paiement</p>
+        </div>
+        
+        <!-- Étape 2 : Lien PayPal + confirmation -->
+        <div id="step2" style="display:none;">
+            <h2>💰 Effectuer le paiement</h2>
+            <div class="product-info">
+                <div class="product-name" id="modalProductName2">Produit</div>
+                <div class="product-price" id="modalProductPrice2">0.00€</div>
+            </div>
+            
+            <p style="text-align:center;color:rgba(255,255,255,0.7);margin:10px 0;">
+                Cliquez sur le lien ci-dessous pour payer via PayPal :
+            </p>
+            
+            <a href="#" id="paypalLinkBtn" class="btn-lien-paypal" target="_blank">🔗 Ouvrir PayPal</a>
+            
+            <p style="text-align:center;font-size:0.85rem;color:var(--gold);margin:10px 0;">
+                ⚠️ Après le paiement, revenez ici et cliquez sur "J'ai payé"
+            </p>
+            
+            <button class="btn-confirmer-paiement" id="confirmPaymentBtn">✅ J'ai payé !</button>
+            <button class="btn-secondary" id="openPaypalAgainBtn">🔄 Rouvrir le lien PayPal</button>
+            
+            <div class="warning-text">Votre commande sera traitée dans les minutes suivant la confirmation</div>
+        </div>
+        
+        <!-- Étape 3 : Confirmation -->
+        <div id="step3" style="display:none;">
+            <div class="success-msg" style="display:block;">
+                <span class="checkmark">✅</span>
+                <h3>Paiement confirmé !</h3>
+                <p style="color:rgba(255,255,255,0.7);">Votre commande est en cours de traitement.</p>
+                <p style="color:var(--primary);font-weight:600;">Vous recevrez le produit dans les plus brefs délais.</p>
+                <div style="margin-top:15px;padding:10px;background:rgba(0,240,255,0.05);border-radius:10px;font-size:0.85rem;color:rgba(255,255,255,0.5);">
+                    Un email de confirmation vous a été envoyé.<br>
+                    En cas de souci, contactez @miraashop
+                </div>
+                <button class="btn-secondary" id="closeFinalBtn" style="margin-top:15px;">Fermer</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+
+    <!-- ===== HEADER ===== -->
+    <header>
+        <div class="logo">⚡ MIRAA SHOP ⚡</div>
+        <div class="lightning-divider">✦ ✦ ✦</div>
+        <div class="typing-text">LE SHOP ULTIME — TOUT À PRIX CASSÉ</div>
+        <div class="logo-sub">#1 DANS L'UNIVERS DISCORD & ROBLOX</div>
+    </header>
+
+    <!-- ===== ON TOP BANNER ===== -->
+    <div class="ontop-banner animate-on-scroll">
+        <h2>👑 MIRAASHOP ON TOP ! 👑</h2>
+        <p>⚡ LA QUALITÉ AU MEILLEUR PRIX ⚡</p>
+    </div>
+
+    <!-- ============================== -->
+    <!-- NITRO / DECO SECTION          -->
+    <!-- ============================== -->
+    <h2 class="section-title animate-on-scroll">💎 NITRO & DÉCOMPTE</h2>
+    <div class="nitro-highlight animate-on-scroll">
+        <div style="text-align:center;">
+            <div class="category-badge" style="animation-delay:0.2s;">🔥 NITRO BOOST — 3,80 €</div>
+            <div class="price-big">3,80 €</div>
+            <p style="color:rgba(255,255,255,0.5);margin-bottom:20px;">✨ Prix boutique → Prix Miraa Shop</p>
+        </div>
+        <div class="cards-grid">
+            <div class="card"><div class="card-badge best">⭐ MEILLEURE VENTE</div><h3>Décompter 4.99€</h3> <span class="arrow-ani">➜</span> <span class="price">1.65€</span> <br><small>Décompter</small><div class="stock-info"><span class="dot green"></span> En stock</div><button class="buy-btn small" onclick="openPayment('Décompter 4.99€ → 1.65€', '1.65', 'https://paypal.me/Exacu/1.65', 'Nitro & Décompte')">🛒 Acheter 1.65€</button></div>
+            <div class="card"><div class="card-badge hot">🔥 POPULAIRE</div><h3>Décompter 5.99€</h3> <span class="arrow-ani">➜</span> <span class="price">1.85€</span><div class="stock-info"><span class="dot green"></span> En stock</div><button class="buy-btn small" onclick="openPayment('Décompter 5.99€ → 1.85€', '1.85', 'https://paypal.me/Exacu/1.85', 'Nitro & Décompte')">🛒 Acheter 1.85€</button></div>
+            <div class="card"><h3>Décompter 6.99€</h3> <span class="arrow-ani">➜</span> <span class="price">2.20€</span><div class="stock-info"><span class="dot green"></span> En stock</div><button class="buy-btn small" onclick="openPayment('Décompter 6.99€ → 2.20€', '2.20', 'https://paypal.me/Exacu/2.20', 'Nitro & Décompte')">🛒 Acheter 2.20€</button></div>
+            <div class="card"><h3>Décompter 7.99€</h3> <span class="arrow-ani">➜</span> <span class="price">2.46€</span><div class="stock-info"><span class="dot orange"></span> Stock limité</div><button class="buy-btn small" onclick="openPayment('Décompter 7.99€ → 2.46€', '2.46', 'https://paypal.me/Exacu/2.46', 'Nitro & Décompte')">🛒 Acheter 2.46€</button></div>
+            <div class="card"><h3>Décompter 8.49€</h3> <span class="arrow-ani">➜</span> <span class="price">2.65€</span><div class="stock-info"><span class="dot green"></span> En stock</div><button class="buy-btn small" onclick="openPayment('Décompter 8.49€ → 2.65€', '2.65', 'https://paypal.me/Exacu/2.65', 'Nitro & Décompte')">🛒 Acheter 2.65€</button></div>
+            <div class="card"><h3>Décompter 8.99€</h3> <span class="arrow-ani">➜</span> <span class="price">2.90€</span><div class="stock-info"><span class="dot green"></span> En stock</div><button class="buy-btn small" onclick="openPayment('Décompter 8.99€ → 2.90€', '2.90', 'https://paypal.me/Exacu/2.90', 'Nitro & Décompte')">🛒 Acheter 2.90€</button></div>
+            <div class="card"><div class="card-badge hot">🔥 POPULAIRE</div><h3>Décompter 9.99€</h3> <span class="arrow-ani">➜</span> <span class="price">3.65€</span><div class="stock-info"><span class="dot green"></span> En stock</div><button class="buy-btn small" onclick="openPayment('Décompter 9.99€ → 3.65€', '3.65', 'https://paypal.me/Exacu/3.65', 'Nitro & Décompte')">🛒 Acheter 3.65€</button></div>
+            <div class="card"><h3>Décompter 11.99€</h3> <span class="arrow-ani">➜</span> <span class="price">3.90€</span><div class="stock-info"><span class="dot orange"></span> Stock limité</div><button class="buy-btn small" onclick="openPayment('Décompter 11.99€ → 3.90€', '3.90', 'https://paypal.me/Exacu/3.90', 'Nitro & Décompte')">🛒 Acheter 3.90€</button></div>
+        </div>
+        <div style="text-align:center;margin-top:10px;color:var(--primary);font-weight:600;animation:neonPulse 2s infinite;">
+            📦 PRIX BOUTIQUE <span class="arrow-ani">➜</span> PRIX MIRAA SHOP
+        </div>
+    </div>
+
+    <!-- ============================== -->
+    <!-- SERVER BOOST                   -->
+    <!-- ============================== -->
+    <h2 class="section-title animate-on-scroll">🚀 SERVER BOOST</h2>
+    <div class="cards-grid">
+        <div class="card animate-on-scroll"><div class="card-badge best">⭐ RECOMMANDÉ</div><h3>14 boost (1 mois)</h3><span class="price">3.50€</span><div class="stock-info"><span class="dot green"></span> En stock · Livraison instantanée</div><button class="buy-btn" onclick="openPayment('14 Boost (1 mois)', '3.50', 'https://paypal.me/Exacu/3.50', 'Server Boost')">🛒 Acheter 3.50€</button></div>
+        <div class="card animate-on-scroll"><div class="card-badge hot">🔥 ÉCONOMIE</div><h3>14 boost (3 mois)</h3><span class="price">7.50€</span><div class="stock-info"><span class="dot green"></span> En stock · Économisez 30%</div><button class="buy-btn" onclick="openPayment('14 Boost (3 mois)', '7.50', 'https://paypal.me/Exacu/7.50', 'Server Boost')">🛒 Acheter 7.50€</button></div>
+    </div>
+
+    <!-- ============================== -->
+    <!-- MEMBRES DISCORD                -->
+    <!-- ============================== -->
+    <h2 class="section-title animate-on-scroll">👥 MEMBRES DISCORD</h2>
+    
+    <h3 style="color:var(--primary);text-align:center;animation:neonPulse 2s infinite;">🟢 EN LIGNE</h3>
+    <div class="cards-grid">
+        <div class="card animate-on-scroll"><h3>50 membres en ligne</h3><span class="arrow-ani">➜</span><span class="price">0.50€</span><div class="stock-info"><span class="dot green"></span> Prêt en 24h</div><button class="buy-btn small" onclick="openPayment('50 Membres en ligne', '0.50', 'https://paypal.me/Exacu/0.50', 'Membres Discord')">🛒 Acheter</button></div>
+        <div class="card animate-on-scroll"><h3>100 membres en ligne</h3><span class="arrow-ani">➜</span><span class="price">0.70€</span><div class="stock-info"><span class="dot green"></span> Prêt en 24h</div><button class="buy-btn small" onclick="openPayment('100 Membres en ligne', '0.70', 'https://paypal.me/Exacu/0.70', 'Membres Discord')">🛒 Acheter</button></div>
+        <div class="card animate-on-scroll"><h3>200 membres en ligne</h3><span class="arrow-ani">➜</span><span class="price">0.90€</span><div class="stock-info"><span class="dot green"></span> Prêt en 24h</div><button class="buy-btn small" onclick="openPayment('200 Membres en ligne', '0.90', 'https://paypal.me/Exacu/0.90', 'Membres Discord')">🛒 Acheter</button></div>
+        <div class="card animate-on-scroll"><h3>400 membres en ligne</h3><span class="arrow-ani">➜</span><span class="price">1.75€</span><div class="stock-info"><span class="dot green"></span> Prêt en 24h</div><button class="buy-btn small" onclick="openPayment('400 Membres en ligne', '1.75', 'https://paypal.me/Exacu/1.75', 'Membres Discord')">🛒 Acheter</button></div>
+        <div class="card animate-on-scroll"><div class="card-badge hot">🔥 POPULAIRE</div><h3>500 membres en ligne</h3><span class="arrow-ani">➜</span><span class="price">2.25€</span><div class="stock-info"><span class="dot green"></span> Prêt en 24h</div><button class="buy-btn small" onclick="openPayment('500 Membres en ligne', '2.25', 'https://paypal.me/Exacu/2.25', 'Membres Discord')">🛒 Acheter</button></div>
+        <div class="card animate-on-scroll"><h3>800 membres en ligne</h3><span class="arrow-ani">➜</span><span class="price">3.40€</span><div class="stock-info"><span class="dot orange"></span> Sur commande</div><button class="buy-btn small" onclick="openPayment('800 Membres en ligne', '3.40', 'https://paypal.me/Exacu/3.40', 'Membres Discord')">🛒 Acheter</button></div>
+        <div class="card animate-on-scroll"><div class="card-badge best">⭐ MEILLEURE VENTE</div><h3>1000 membres en ligne</h3><span class="arrow-ani">➜</span><span class="price">4.25€</span><div class="stock-info"><span class="dot green"></span> Très demandé</div><button class="buy-btn small" onclick="openPayment('1000 Membres en ligne', '4.25', 'https://paypal.me/Exacu/4.25', 'Membres Discord')">🛒 Acheter</button></div>
+    </div>
+
+    <h3 style="color:#ff4444;text-align:center;margin-top:30px;animation:neonPulse 2s infinite;">🔴 HORS LIGNE</h3>
+    <div class="cards-grid">
+        <div class="card animate-on-scroll"><h3>50 membres hors ligne</h3><span class="arrow-ani">➜</span><span class="price">0.40€</span><div class="stock-info"><span class="dot green"></span> Prêt en 24h</div><button class="buy-btn small" onclick="openPayment('50 Membres hors ligne', '0.40', 'https://paypal.me/Exacu/0.40', 'Membres Discord')">🛒 Acheter</button></div>
+        <div class="card animate-on-scroll"><h3>100 membres hors ligne</h3><span class="arrow-ani">➜</span><span class="price">0.60€</span><div class="stock-info"><span class="dot green"></span> Prêt en 24h</div><button class="buy-btn small" onclick="openPayment('100 Membres hors ligne', '0.60', 'https://paypal.me/Exacu/0.60', 'Membres Discord')">🛒 Acheter</button></div>
+        <div class="card animate-on-scroll"><h3>200 membres hors ligne</h3><span class="arrow-ani">➜</span><span class="price">0.80€</span><div class="stock-info"><span class="dot green"></span> Prêt en 24h</div><button class="buy-btn small" onclick="openPayment('200 Membres hors ligne', '0.80', 'https://paypal.me/Exacu/0.80', 'Membres Discord')">🛒 Acheter</button></div>
+        <div class="card animate-on-scroll"><h3>300 membres hors ligne</h3><span class="arrow-ani">➜</span><span class="price">1€</span><div class="stock-info"><span class="dot green"></span> Prêt en 24h</div><button class="buy-btn small" onclick="openPayment('300 Membres hors ligne', '1.00', 'https://paypal.me/Exacu/1.00', 'Membres Discord')">🛒 Acheter</button></div>
+        <div class="card animate-on-scroll"><h3>400 membres hors ligne</h3><span class="arrow-ani">➜</span><span class="price">1.40€</span><div class="stock-info"><span class="dot green"></span> Prêt en 24h</div><button class="buy-btn small" onclick="openPayment('400 Membres hors ligne', '1.40', 'https://paypal.me/Exacu/1.40', 'Membres Discord')">🛒 Acheter</button></div>
+        <div class="card animate-on-scroll"><h3>500 membres hors ligne</h3><span class="arrow-ani">➜</span><span class="price">1.90€</span><div class="stock-info"><span class="dot green"></span> Prêt en 24h</div><button class="buy-btn small" onclick="openPayment('500 Membres hors ligne', '1.90', 'https://paypal.me/Exacu/1.90', 'Membres Discord')">🛒 Acheter</button></div>
+        <div class="card animate-on-scroll"><h3>800 membres hors ligne</h3><span class="arrow-ani">➜</span><span class="price">2.60€</span><div class="stock-info"><span class="dot orange"></span> Sur commande</div><button class="buy-btn small" onclick="openPayment('800 Membres hors ligne', '2.60', 'https://paypal.me/Exacu/2.60', 'Membres Discord')">🛒 Acheter</button></div>
+        <div class="card animate-on-scroll"><div class="card-badge hot">🔥 POPULAIRE</div><h3>1000 membres hors ligne</h3><span class="arrow-ani">➜</span><span class="price">3€</span><div class="stock-info"><span class="dot green"></span> Très demandé</div><button class="buy-btn small" onclick="openPayment('1000 Membres hors ligne', '3.00', 'https://paypal.me/Exacu/3.00', 'Membres Discord')">🛒 Acheter</button></div>
+    </div>
+
+    <!-- ============================== -->
+    <!-- BOTS                           -->
+    <!-- ============================== -->
+    <h2 class="section-title animate-on-scroll">🤖 BOTS</h2>
+    <div class="cards-grid">
+        <div class="card animate-on-scroll"><div class="card-badge best">⭐ RECOMMANDÉ</div><h3>Bot Vouch</h3><span class="price">7€</span><div class="stock-info"><span class="dot green"></span> En stock · Installation incluse</div><button class="buy-btn" onclick="openPayment('Bot Vouch', '7.00', 'https://paypal.me/Exacu/7.00', 'Bots')">🛒 Acheter 7€</button></div>
+        <div class="card animate-on-scroll"><div class="card-badge hot">🔥 PRO</div><h3>Bot Boost</h3><span class="price">13€</span><br><small style="color:rgba(255,255,255,0.4);">+3€ fourni</small><div class="stock-info"><span class="dot green"></span> Hautes performances</div><button class="buy-btn" onclick="openPayment('Bot Boost', '13.00', 'https://paypal.me/Exacu/13.00', 'Bots')">🛒 Acheter 13€</button></div>
+    </div>
+
+    <!-- ============================== -->
+    <!-- METHODS                        -->
+    <!-- ============================== -->
+    <h2 class="section-title animate-on-scroll">⚙️ MÉTHODES</h2>
+    <div class="cards-grid">
+        <div class="card animate-on-scroll"><div class="card-badge hot">🔥 EXCLUSIF</div><h3>Free Nitro/Déco</h3><span class="price">13€</span><div class="stock-info"><span class="dot orange"></span> Méthode vérifiée</div><button class="buy-btn" onclick="openPayment('Free Nitro/Déco', '13.00', 'https://paypal.me/Exacu/13.00', 'Méthodes')">🛒 Acheter 13€</button></div>
+        <div class="card animate-on-scroll"><h3>Vocaux fake pedo</h3><span class="price">7€</span><div class="stock-info"><span class="dot orange"></span> Usage avancé</div><button class="buy-btn" onclick="openPayment('Vocaux fake pedo', '7.00', 'https://paypal.me/Exacu/7.00', 'Méthodes')">🛒 Acheter 7€</button></div>
+        <div class="card animate-on-scroll"><div class="card-badge best">⭐ GUIDE COMPLET</div><h3>3 Ebook Dox</h3><span class="price">10€</span><div class="stock-info"><span class="dot green"></span> PDF + Templates</div><button class="buy-btn" onclick="openPayment('3 Ebook Dox', '10.00', 'https://paypal.me/Exacu/10.00', 'Méthodes')">🛒 Acheter 10€</button></div>
+    </div>
+
+    <!-- ============================== -->
+    <!-- ROBLOX SECTION                 -->
+    <!-- ============================== -->
+    <h2 class="section-title animate-on-scroll" style="animation: rainbow 2s linear infinite, neonPulse 2s infinite;">🎮 AGED ROBLOX ACCOUNTS FA</h2>
+
+    <div class="badges-row animate-on-scroll">
+        <div class="badge-item">🛡️ SÉCURISÉS</div>
+        <div class="badge-item">🤝 FIABLES</div>
+        <div class="badge-item">✔️ PRÊTS À L'EMPLOI</div>
+        <div class="badge-item">⚡ LIVRAISON INSTANTANÉE</div>
+    </div>
+
+    <div class="cards-grid">
+        <div class="card animate-on-scroll">
+            <div style="background:linear-gradient(135deg,#0033cc,#0066ff);padding:10px;border-radius:10px;text-align:center;color:#fff;font-weight:700;margin-bottom:15px;font-size:0.85rem;animation:pulseGlow 2s infinite;width:100%;">🏆 2023 · AGED ROBLOX FA</div>
+            <h3>[2023] AGED ROBLOX ACCOUNTS FA</h3>
+            <span class="price">1.50€</span>
+            <div class="stock-info"><span class="dot green"></span> 50+ en stock</div>
+            <button class="buy-btn" onclick="openPayment('[2023] Aged Roblox FA', '1.50', 'https://paypal.me/Exacu/1.50', 'Roblox')">🛒 Acheter 1.50€</button>
+        </div>
+        <div class="card animate-on-scroll">
+            <div style="background:linear-gradient(135deg,#0033cc,#0066ff);padding:10px;border-radius:10px;text-align:center;color:#fff;font-weight:700;margin-bottom:15px;font-size:0.85rem;animation:pulseGlow 2s infinite;width:100%;">🏆 2021 · AGED ROBLOX FA</div>
+            <h3>[2021] AGED ROBLOX ACCOUNTS FA</h3>
+            <span class="price">2.50€</span>
+            <div class="stock-info"><span class="dot orange"></span> Stock limité</div>
+            <button class="buy-btn" onclick="openPayment('[2021] Aged Roblox FA', '2.50', 'https://paypal.me/Exacu/2.50', 'Roblox')">🛒 Acheter 2.50€</button>
+        </div>
+        <div class="card animate-on-scroll">
+            <div style="background:linear-gradient(135deg,#0033cc,#0066ff);padding:10px;border-radius:10px;text-align:center;color:#fff;font-weight:700;margin-bottom:15px;font-size:0.85rem;animation:pulseGlow 2s infinite;width:100%;">🎲 RANDOM ROBUX</div>
+            <h3>[RANDOM] ROBLOX ACCOUNTS FA (ROBUX)</h3>
+            <span class="price">2.50€</span>
+            <div class="stock-info"><span class="dot green"></span> En stock</div>
+            <button class="buy-btn" onclick="openPayment('[Random] Roblox FA (Robux)', '2.50', 'https://paypal.me/Exacu/2.50', 'Roblox')">🛒 Acheter 2.50€</button>
+        </div>
+        <div class="card animate-on-scroll"><div class="card-badge hot">🔥 POPULAIRE</div><h3>ROBUX 1000-2500</h3><span class="price">4.50€</span><div class="stock-info"><span class="dot green"></span> En stock</div><button class="buy-btn" onclick="openPayment('Robux 1000-2500', '4.50', 'https://paypal.me/Exacu/4.50', 'Roblox')">🛒 Acheter 4.50€</button></div>
+        <div class="card animate-on-scroll"><h3>ROBUX 2500-5000</h3><span class="price">6.50€</span><div class="stock-info"><span class="dot green"></span> En stock</div><button class="buy-btn" onclick="openPayment('Robux 2500-5000', '6.50', 'https://paypal.me/Exacu/6.50', 'Roblox')">🛒 Acheter 6.50€</button></div>
+        <div class="card animate-on-scroll"><div class="card-badge best">⭐ MEILLEURE OFFRE</div><h3>ROBUX 5000-10.000</h3><span class="price">10.00€</span><div class="stock-info"><span class="dot green"></span> En stock</div><button class="buy-btn" onclick="openPayment('Robux 5000-10000', '10.00', 'https://paypal.me/Exacu/10.00', 'Roblox')">🛒 Acheter 10.00€</button></div>
+    </div>
+
+    <!-- ============================== -->
+    <!-- GUARANTEE ROW 1                -->
+    <!-- ============================== -->
+    <div class="guarantee-row animate-on-scroll">
+        <div class="guarantee-item"><span class="icon">🛡️</span><strong>100% SÉCURISÉ</strong><span>Comptes fiables et vérifiés</span></div>
+        <div class="guarantee-item"><span class="icon">⚡</span><strong>LIVRAISON INSTANTANÉE</strong><span>Reçu en quelques minutes</span></div>
+        <div class="guarantee-item"><span class="icon">🏅</span><strong>MEILLEURE QUALITÉ</strong><span>Comptes âgés et stables</span></div>
+        <div class="guarantee-item"><span class="icon">🎧</span><strong>SUPPORT RAPIDE</strong><span>Nous sommes là pour vous aider</span></div>
+    </div>
+
+    <!-- ============================== -->
+    <!-- STREAMING / ACCOUNTS           -->
+    <!-- ============================== -->
+    <h2 class="section-title animate-on-scroll">📺 STREAMING & COMPTES</h2>
+    <div class="cards-grid">
+        <div class="card animate-on-scroll"><div class="card-badge">📺</div><h3>Crunchyroll Lifetime</h3><span class="price">0.20€</span><div class="stock-info"><span class="dot green"></span> 200+ en stock</div><button class="buy-btn small" onclick="openPayment('Crunchyroll Lifetime', '0.20', 'https://paypal.me/Exacu/0.20', 'Streaming')">🛒 Acheter</button></div>
+        <div class="card animate-on-scroll"><div class="card-badge hot">🔥 VPN</div><h3>NordVPN Lifetime</h3><span class="price">1.00€</span><div class="stock-info"><span class="dot green"></span> 50+ en stock</div><button class="buy-btn small" onclick="openPayment('NordVPN Lifetime', '1.00', 'https://paypal.me/Exacu/1.00', 'Streaming')">🛒 Acheter</button></div>
+        <div class="card animate-on-scroll"><h3>IPVanish Lifetime</h3><span class="price">0.80€</span><div class="stock-info"><span class="dot green"></span> 30+ en stock</div><button class="buy-btn small" onclick="openPayment('IPVanish Lifetime', '0.80', 'https://paypal.me/Exacu/0.80', 'Streaming')">🛒 Acheter</button></div>
+        <div class="card animate-on-scroll"><div class="card-badge best">⭐ BEST-SELLER</div><h3>YouTube Premium</h3><span class="price">2€</span><div class="stock-info"><span class="dot green"></span> Très demandé</div><button class="buy-btn small" onclick="openPayment('YouTube Premium', '2.00', 'https://paypal.me/Exacu/2.00', 'Streaming')">🛒 Acheter</button></div>
+        <div class="card animate-on-scroll"><div class="card-badge hot">🔥 POPULAIRE</div><h3>Netflix Lifetime</h3><span class="price">1.40€</span><div class="stock-info"><span class="dot green"></span> 100+ en stock</div><button class="buy-btn small" onclick="openPayment('Netflix Lifetime', '1.40', 'https://paypal.me/Exacu/1.40', 'Streaming')">🛒 Acheter</button></div>
+        <div class="card animate-on-scroll"><h3>Disney+ Lifetime</h3><span class="price">0.80€</span><div class="stock-info"><span class="dot green"></span> 80+ en stock</div><button class="buy-btn small" onclick="openPayment('Disney+ Lifetime', '0.80', 'https://paypal.me/Exacu/0.80', 'Streaming')">🛒 Acheter</button></div>
+        <div class="card animate-on-scroll"><div class="card-badge">🎵</div><h3>Spotify Premium</h3><span class="price">6€</span><div class="stock-info"><span class="dot orange"></span> Stock limité</div><button class="buy-btn small" onclick="openPayment('Spotify Premium', '6.00', 'https://paypal.me/Exacu/6.00', 'Streaming')">🛒 Acheter</button></div>
+        <div class="card animate-on-scroll"><h3>CapCut Pro</h3><span class="price">2€</span><div class="stock-info"><span class="dot green"></span> En stock</div><button class="buy-btn small" onclick="openPayment('CapCut Pro', '2.00', 'https://paypal.me/Exacu/2.00', 'Streaming')">🛒 Acheter</button></div>
+        <div class="card animate-on-scroll"><div class="card-badge">🎮</div><h3>Valorant (7k-12k VP)</h3><span class="price">90€</span><div class="stock-info"><span class="dot orange"></span> Sur commande</div><button class="buy-btn" onclick="openPayment('Valorant 7k-12k VP', '90.00', 'https://paypal.me/Exacu/90.00', 'Streaming')">🛒 Acheter 90€</button></div>
+        <div class="card animate-on-scroll"><h3>Fortnite (50-100 skins)</h3><span class="price">20€</span><div class="stock-info"><span class="dot orange"></span> Sur commande</div><button class="buy-btn" onclick="openPayment('Fortnite 50-100 skins', '20.00', 'https://paypal.me/Exacu/20.00', 'Streaming')">🛒 Acheter 20€</button></div>
+        <div class="card animate-on-scroll"><h3>Epic Games (100-200 jeux)</h3><span class="price">6€</span><div class="stock-info"><span class="dot green"></span> En stock</div><button class="buy-btn small" onclick="openPayment('Epic Games 100-200 jeux', '6.00', 'https://paypal.me/Exacu/6.00', 'Streaming')">🛒 Acheter</button></div>
+        <div class="card animate-on-scroll"><div class="card-badge hot">🔥 RARE</div><h3>Discord 2017</h3><span class="price">6€</span><div class="stock-info"><span class="dot red"></span> Très rare · 3 restants</div><button class="buy-btn small" onclick="openPayment('Discord 2017', '6.00', 'https://paypal.me/Exacu/6.00', 'Streaming')">🛒 Acheter</button></div>
+        <div class="card animate-on-scroll"><h3>Discord 2018</h3><span class="price">4€</span><div class="stock-info"><span class="dot orange"></span> Stock limité</div><button class="buy-btn small" onclick="openPayment('Discord 2018', '4.00', 'https://paypal.me/Exacu/4.00', 'Streaming')">🛒 Acheter</button></div>
+    </div>
+
+    <!-- ============================== -->
+    <!-- GUARANTEE ROW 2                -->
+    <!-- ============================== -->
+    <div class="guarantee-row animate-on-scroll">
+        <div class="guarantee-item"><span class="icon">🛡️</span><strong>100% SÉCURISÉ</strong><span>Garantie</span></div>
+        <div class="guarantee-item"><span class="icon">⚡</span><strong>LIVRAISON RAPIDE</strong><span>Éclair</span></div>
+        <div class="guarantee-item"><span class="icon">🔄</span><strong>GARANTIE À VIE</strong><span>Satisfait ou remboursé</span></div>
+        <div class="guarantee-item"><span class="icon">🎧</span><strong>SUPPORT 24/7</strong><span>À votre écoute</span></div>
+    </div>
+
+    <!-- ============================== -->
+    <!-- CHATGPT SECTION                -->
+    <!-- ============================== -->
+    <h2 class="section-title animate-on-scroll">🧠 CHATGPT PRO & PLUS · LIFETIME</h2>
+
+    <div class="badges-row animate-on-scroll">
+        <div class="badge-item">🛡️ 100% SÉCURISÉ / GARANTIE</div>
+        <div class="badge-item">⚡ LIVRAISON / INSTANTANÉE</div>
+        <div class="badge-item">⭐ COMPTES / PREMIUM</div>
+        <div class="badge-item">🎧 SUPPORT 24/7</div>
+    </div>
+
+    <div class="chatgpt-duo animate-on-scroll">
+        <div class="chatgpt-card">
+            <div style="font-size:3rem;margin-bottom:10px;animation:float 4s infinite;">🤖</div>
+            <h4 style="color:var(--primary);">CHATGPT PLUS</h4>
+            <div style="background:rgba(0,240,255,0.1);padding:8px 15px;border-radius:10px;display:inline-block;font-weight:600;font-size:0.85rem;margin:10px 0;animation:borderGlow 3s infinite;">LIFETIME ACCÈS</div>
+            <ul>
+                <li>✅ Accès à GPT-4</li>
+                <li>✅ Réponses plus rapides</li>
+                <li>✅ Accès prioritaire</li>
+                <li>✅ Fonctionnalités Plus</li>
+                <li>✅ Accès à vie</li>
+            </ul>
+            <div class="price-tag">2,00€</div>
+            <button class="buy-btn" onclick="openPayment('ChatGPT Plus Lifetime', '2.00', 'https://paypal.me/Exacu/2.00', 'ChatGPT')" style="margin-top:15px;">🛒 Acheter 2€</button>
+        </div>
+        <div class="chatgpt-card">
+            <div style="font-size:3rem;margin-bottom:10px;animation:float 5s infinite 0.5s;">🧠</div>
+            <h4 style="color:var(--gold);">CHATGPT PRO</h4>
+            <div style="background:rgba(255,215,0,0.1);padding:8px 15px;border-radius:10px;display:inline-block;font-weight:600;font-size:0.85rem;margin:10px 0;animation:borderGlow 3s infinite;">LIFETIME ACCÈS</div>
+            <ul>
+                <li>✅ Accès à GPT-4o & +</li>
+                <li>✅ Performances maximales</li>
+                <li>✅ Accès prioritaire total</li>
+                <li>✅ Outils avancés inclus</li>
+                <li>✅ Accès à vie</li>
+            </ul>
+            <div class="price-tag" style="color:var(--gold);">4,00€</div>
+            <button class="buy-btn gold" onclick="openPayment('ChatGPT Pro Lifetime', '4.00', 'https://paypal.me/Exacu/4.00', 'ChatGPT')" style="margin-top:15px;">🛒 Acheter 4€</button>
+        </div>
+    </div>
+
+    <div class="ontop-banner animate-on-scroll" style="padding:25px;">
+        <h2 style="font-size:1.8rem;animation:rainbow 2s linear infinite;">🎁 ACCÈS À VIE · PAIEMENT UNIQUE · AUCUN ABONNEMENT</h2>
+        <p style="animation:neonPulse 2s infinite;font-weight:600;margin-top:10px;">PROFITEZ DE CHATGPT PREMIUM SANS LIMITES !</p>
+    </div>
+
+    <div class="badges-row animate-on-scroll">
+        <div class="badge-item">✨ RÉPONSES / ULTRA RAPIDES</div>
+        <div class="badge-item">🧠 IA AVANCÉE / PLUS INTELLIGENTE</div>
+        <div class="badge-item">🔒 COMPTE PRIVÉ / 100% SÉCURISÉ</div>
+        <div class="badge-item">🔄 GARANTIE / REMPLACEMENT</div>
+        <div class="badge-item">🚀 ACTIVATION / EN QUELQUES MINUTES</div>
+    </div>
+
+    <!-- ============================== -->
+    <!-- FOURNISSEURS                   -->
+    <!-- ============================== -->
+    <h2 class="section-title animate-on-scroll">📦 FOURNISSEURS</h2>
+    <div class="provider-grid">
+        <div class="provider-item animate-on-scroll"><div class="card-badge hot">💰 REVENDEUR</div><h3>N1tro</h3><span class="price">2.80€</span><br><small style="color:rgba(255,255,255,0.4);">→ revendu 12€</small><div class="stock-info"><span class="dot green"></span> Marge ×4.3</div><button class="buy-btn small" onclick="openPayment('N1tro Fournisseur', '2.80', 'https://paypal.me/Exacu/2.80', 'Fournisseurs')">🛒 Acheter</button></div>
+        <div class="provider-item animate-on-scroll"><h3>Members</h3><span class="price">7.50€</span><div class="stock-info"><span class="dot green"></span> Fournisseur</div><button class="buy-btn small" onclick="openPayment('Members Fournisseur', '7.50', 'https://paypal.me/Exacu/7.50', 'Fournisseurs')">🛒 Acheter</button></div>
+        <div class="provider-item animate-on-scroll"><h3>Déco</h3><span class="price">12€</span><div class="stock-info"><span class="dot orange"></span> Fournisseur</div><button class="buy-btn small" onclick="openPayment('Déco Fournisseur', '12.00', 'https://paypal.me/Exacu/12.00', 'Fournisseurs')">🛒 Acheter</button></div>
+        <div class="provider-item animate-on-scroll"><h3>Boost</h3><span class="price">12€</span><div class="stock-info"><span class="dot orange"></span> Fournisseur</div><button class="buy-btn small" onclick="openPayment('Boost Fournisseur', '12.00', 'https://paypal.me/Exacu/12.00', 'Fournisseurs')">🛒 Acheter</button></div>
+    </div>
+
+    <!-- ============================== -->
+    <!-- PAIEMENTS                      -->
+    <!-- ============================== -->
+    <h2 class="section-title animate-on-scroll">💳 PAIEMENTS ACCEPTÉS</h2>
+    <div class="payment-methods animate-on-scroll">
+        <a href="https://paypal.me/Exacu" target="_blank" class="payment-item paypal">
+            🅿️ PayPal · PAIEMENT SÉCURISÉ
+        </a>
+        <div class="payment-item litecoin">Ł LITECOIN / RAPIDE & SÉCURISÉ</div>
+        <div class="payment-item bitcoin">₿ BITCOIN / ANONYME & RAPIDE</div>
+    </div>
+
+    <div class="ontop-banner animate-on-scroll" style="padding:20px;">
+        <p style="font-size:1.3rem;font-weight:700;animation:neonPulse 2s infinite;">🔗 Paiement PayPal : <a href="https://paypal.me/Exacu" target="_blank" style="color:var(--gold);text-decoration:none;">paypal.me/Exacu</a></p>
+        <p style="color:rgba(255,255,255,0.5);font-size:0.9rem;margin-top:5px;">👥 Envoyer en "amis et proches" — pas de frais !</p>
+    </div>
+
+    <!-- ============================== -->
+    <!-- FOOTER                         -->
+    <!-- ============================== -->
+    <footer>
+        <div class="stars">★★★★★</div>
+        <div class="big-text">👑 MULVADD 👑</div>
+        <div class="sub-text">— LA QUALITÉ AU MEILLEUR PRIX ! —</div>
+        <div style="margin-top:20px;font-size:1.2rem;font-weight:600;animation:neonPulse 2s infinite;">SATISFAIT OU REMBOURSÉ ★★★★★</div>
+        <div style="margin-top:20px;display:flex;justify-content:center;gap:20px;flex-wrap:wrap;font-size:0.85rem;">
+            <span style="color:var(--primary);">📧 Contact : @miraashop</span>
+            <span style="color:var(--secondary);">🛡️ Paiement sécurisé</span>
+            <span style="color:var(--gold);">⚡ Livraison instantanée</span>
+        </div>
+        <div style="margin-top:30px;font-size:0.85rem;color:rgba(255,255,255,0.3);letter-spacing:4px;text-transform:uppercase;">
+            Miraa Shop ⚡ Établi en 2024 · Tous droits réservés
+        </div>
+    </footer>
+
+</div>
+
+<!-- ===== SCROLL ANIMATION SCRIPT ===== -->
+<script>
+    (function() {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.15 });
+
+        document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
+    })();
+</script>
+
+<!-- ===== SCRIPT PRINCIPAL : MODAL + WEBHOOK + EMAIL ===== -->
+<script>
+    // ⚠️ CONFIGURATION — REMPLACE CES VALEURS ⚠️
+    const CONFIG = {
+        DISCORD_WEBHOOK_URL: 'https://discord.com/api/webhooks/1519204968756678758/y4Q5vTPAzkAUX6BDT4Gg_K1ORyrbsdKwfsLUuc6y48nmXsBFNVDoBfm8uwDoG3xII31-',
+        YOUR_EMAIL: 'tonemail@gmail.com',  // Email où tu veux recevoir les infos
+        SHOP_NAME: 'Miraa Shop',
+        PAYPAL_USERNAME: 'Exacu'
+    };
+
+    // Variable globale pour stocker la commande en cours
+    let currentOrder = null;
+
+    // ===== OUVERTURE DU MODAL =====
+    function openPayment(productName, price, paypalUrl, category) {
+        // Stocker les infos de la commande
+        currentOrder = {
+            productName: productName,
+            price: price,
+            paypalUrl: paypalUrl,
+            category: category,
+            timestamp: new Date().toISOString(),
+            orderId: 'CMD-' + Date.now().toString(36).toUpperCase()
+        };
+
+        // Mettre à jour le modal
+        document.getElementById('modalProductName').textContent = productName;
+        document.getElementById('modalProductPrice').textContent = price + '€';
+        document.getElementById('modalProductName2').textContent = productName;
+        document.getElementById('modalProductPrice2').textContent = price + '€';
+        document.getElementById('paypalLinkBtn').href = paypalUrl;
+
+        // Réinitialiser les étapes
+        document.getElementById('step1').style.display = 'block';
+        document.getElementById('step2').style.display = 'none';
+        document.getElementById('step3').style.display = 'none';
+
+        // Vider les champs
+        document.getElementById('buyerEmail').value = '';
+        document.getElementById('buyerDiscord').value = '';
+
+        // Afficher le modal
+        document.getElementById('paymentModal').classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+
+    // ===== FERMETURE DU MODAL =====
+    function closeModal() {
+        document.getElementById('paymentModal').classList.remove('active');
+        document.body.style.overflow = 'auto';
+        currentOrder = null;
+    }
+
+    document.getElementById('closeModalBtn').addEventListener('click', closeModal);
+    document.getElementById('closeFinalBtn').addEventListener('click', closeModal);
+    // Fermer en cliquant sur l'overlay
+    document.getElementById('paymentModal').addEventListener('click', function(e) {
+        if (e.target === this) closeModal();
+    });
+
+    // ===== ÉTAPE 1 → ÉTAPE 2 =====
+    document.getElementById('goToPaypalBtn').addEventListener('click', function() {
+        const email = document.getElementById('buyerEmail').value.trim();
+        const discord = document.getElementById('buyerDiscord').value.trim();
+        const delivery = document.getElementById('deliveryMethod').value;
+
+        if (!email) {
+            alert('Veuillez entrer votre email pour recevoir le produit.');
+            document.getElementById('buyerEmail').focus();
+            return;
+        }
+        if (!email.includes('@')) {
+            alert('Veuillez entrer un email valide.');
+            document.getElementById('buyerEmail').focus();
+            return;
+        }
+
+        // Enrichir currentOrder
+        currentOrder.buyerEmail = email;
+        currentOrder.buyerDiscord = discord || 'Non fourni';
+        currentOrder.deliveryMethod = delivery;
+
+        // Passer à l'étape 2
+        document.getElementById('step1').style.display = 'none';
+        document.getElementById('step2').style.display = 'block';
+        document.getElementById('step3').style.display = 'none';
+
+        // Ouvrir PayPal dans un nouvel onglet
+        window.open(currentOrder.paypalUrl, '_blank');
+    });
+
+    // ===== ROUVRIR PAYPAL =====
+    document.getElementById('openPaypalAgainBtn').addEventListener('click', function() {
+        window.open(currentOrder.paypalUrl, '_blank');
+    });
+
+    // ===== CONFIRMATION DE PAIEMENT =====
+    document.getElementById('confirmPaymentBtn').addEventListener('click', function() {
+        const btn = this;
+        btn.textContent = '⏳ Envoi en cours...';
+        btn.disabled = true;
+
+        // 1. Envoyer la notification webhook Discord
+        sendDiscordNotification(currentOrder)
+            .then(() => {
+                // 2. Envoyer l'email
+                return sendEmailNotification(currentOrder);
+            })
+            .then(() => {
+                // 3. Afficher confirmation
+                document.getElementById('step2').style.display = 'none';
+                document.getElementById('step3').style.display = 'block';
+            })
+            .catch((error) => {
+                console.error('Erreur:', error);
+                // Afficher quand même la confirmation en cas d'erreur
+                document.getElementById('step2').style.display = 'none';
+                document.getElementById('step3').style.display = 'block';
+                alert('Une erreur est survenue lors de l\'envoi de la notification, mais votre commande est enregistrée.');
+            })
+            .finally(() => {
+                btn.textContent = '✅ J\'ai payé !';
+                btn.disabled = false;
+            });
+    });
+
+    // ===== ENVOI NOTIFICATION DISCORD =====
+    async function sendDiscordNotification(order) {
+        const webhookUrl = CONFIG.DISCORD_WEBHOOK_URL;
+        
+        // Message formaté pour Discord
+        const embed = {
+            title: '🛒 **NOUVELLE COMMANDE** 🛒',
+            color: 0x00f0ff, // Cyan
+            fields: [
+                { name: '📦 Produit', value: order.productName, inline: true },
+                { name: '💵 Prix', value: `${order.price}€`, inline: true },
+                { name: '📂 Catégorie', value: order.category, inline: true },
+                { name: '🆔 ID Commande', value: order.orderId, inline: false },
+                { name: '📧 Email client', value: order.buyerEmail, inline: true },
+                { name: '💬 Discord', value: order.buyerDiscord || 'Non fourni', inline: true },
+                { name: '📬 Livraison', value: order.deliveryMethod, inline: true },
+                { name: '🔗 Lien PayPal', value: order.paypalUrl, inline: false },
+                { name: '🕐 Date', value: new Date().toLocaleString('fr-FR'), inline: false }
+            ],
+            footer: { text: `Miraa Shop · ${order.orderId}` },
+            timestamp: new Date().toISOString()
+        };
+
+        const payload = {
+            username: 'Miraa Shop - Commandes',
+            avatar_url: 'https://cdn.discordapp.com/embed/avatars/0.png',
+            embeds: [embed],
+            content: '@everyone 🚨 **Nouvelle commande reçue !**'
+        };
+
+        try {
+            const response = await fetch(webhookUrl, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+            
+            if (!response.ok) {
+                throw new Error(`Discord webhook error: ${response.status}`);
+            }
+            
+            console.log('✅ Notification Discord envoyée avec succès');
+        } catch (error) {
+            console.error('❌ Erreur envoi Discord:', error);
+            throw error;
+        }
+    }
+
+    // ===== ENVOI NOTIFICATION EMAIL =====
+    async function sendEmailNotification(order) {
+        // Option 1 — Via Formspree (gratuit, facile)
+        // Va sur https://formspree.io, crée un formulaire, mets ton email
+        // Remplace FORMSPREE_ID par l'ID de ton formulaire
+        const FORMSPREE_ID = 'TON_FORMSPREE_ID'; // ← Remplace ça
+        
+        const formData = {
+            email: CONFIG.YOUR_EMAIL,
+            subject: `🛒 NOUVELLE COMMANDE - ${order.orderId}`,
+            message: `
+NOUVELLE COMMANDE MIRAA SHOP 🛒
+═══════════════════════════
+
+📦 Produit : ${order.productName}
+💵 Prix : ${order.price}€
+📂 Catégorie : ${order.category}
+🆔 Commande : ${order.orderId}
+
+━━━ CLIENT ━━━
+📧 Email : ${order.buyerEmail}
+💬 Discord : ${order.buyerDiscord}
+📬 Livraison : ${order.deliveryMethod}
+
+━━━ PAIEMENT ━━━
+🔗 Lien PayPal : ${order.paypalUrl}
+
+🕐 Date : ${new Date().toLocaleString('fr-FR')}
+
+⚠️ Le client a confirmé le paiement. Envoie le produit !
+            `.trim()
+        };
+
+        try {
+            const response = await fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
+                method: 'POST',
+                headers: { 
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            });
+            
+            if (!response.ok) {
+                throw new Error(`Formspree error: ${response.status}`);
+            }
+            
+            console.log('✅ Email envoyé avec succès');
+        } catch (error) {
+            console.error('❌ Erreur envoi email:', error);
+            // Ne pas bloquer le flux si l'email échoue
+            console.log('⚠️ L\'email a échoué mais la commande est notée sur Discord');
+        }
+    }
+</script>
+
+</body>
+</html>
